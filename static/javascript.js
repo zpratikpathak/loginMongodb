@@ -5,13 +5,13 @@ async function registerUser(event) {
   event.preventDefault(); // to stopp from refreshing the page
   let username = document.getElementById("username").value;
   let password = document.getElementById("password").value;
-  console.log(username, password);
+  //console.log(username, password);
   const result = await fetch("api/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(username, password),
+    body: JSON.stringify({ username, password }),
   }).then((res) => {
     res.json;
   });
