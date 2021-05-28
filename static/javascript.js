@@ -23,6 +23,7 @@ form.addEventListener("submit", async (event) => {
   let username = document.getElementById("username").value;
   let password = document.getElementById("password").value;
   //console.log(username, password);
+
   const result = await fetch("api/register", {
     method: "POST",
     headers: {
@@ -32,4 +33,11 @@ form.addEventListener("submit", async (event) => {
   }).then((res) => {
     res.json;
   });
+
+  console.log(result);
+  if (result.status === "ok") {
+    alert("Success");
+  } else {
+    alert(result.error);
+  }
 });

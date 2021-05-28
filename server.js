@@ -26,6 +26,19 @@ app.post("/api/register", async (req, res) => {
   const password = await bcrypt.hash(plainTextPassword, 10); //Generating encrypted/hash passwword
   //console.log(await bcrypt.hash(password, 10)); //Generating encrypted/hash passwword
 
+  //Handling Username errors
+  if (!username || typeof username !== "string") {
+    res.json({ status: "error", error: "Invalid Username" });
+  }
+
+  //Handling Password Error
+  if (password.length < 6) {
+    res.json({
+      status: "error",
+      error: "Password is too Small. Password should be atleast 6 Characters",
+    });
+  }
+
   //Adding username and password in database
   try {
     const response = await User.create({
@@ -34,8 +47,12 @@ app.post("/api/register", async (req, res) => {
     });
     console.log(`User created Succesfully: ${response}`);
   } catch (error) {
-    console.log(error.message);
-    return res.json({ status: "Error" });
+    console.log(JSON.stringify(error)); // Error hae multiple json object values
+
+    if (error.code === 11000) {
+      return res.json({ status: "Error", error: "User already exist" });
+    }
+    throw error; // Throwing unknown errors
   }
 
   res.json({ status: "ok" });
