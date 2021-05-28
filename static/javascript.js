@@ -1,10 +1,11 @@
-const submit = document.querySelector("#submit");
+const form = document.getElementById("reg-form");
+form.addEventListener("submit", registerUser);
 
-submit.addEventListener("click", async (event) => {
+async function registerUser(event) {
   event.preventDefault(); // to stopp from refreshing the page
   let username = document.getElementById("username").value;
   let password = document.getElementById("password").value;
-
+  console.log(username, password);
   const result = await fetch("api/register", {
     method: "POST",
     headers: {
@@ -14,4 +15,4 @@ submit.addEventListener("click", async (event) => {
   }).then((res) => {
     res.json;
   });
-});
+}
