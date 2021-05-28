@@ -1,6 +1,15 @@
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser"); // to parse the JSON POSTED data from web
+const dotenv = require("dotenv");
+dotenv.config();
+
+const mongoose = require("mongoose");
+mongoose.connect(process.env.DB_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+//console.log(process.env.DB_URL);
 
 const app = express();
 app.use("/", express.static(path.join(__dirname, "static")));
@@ -11,8 +20,6 @@ app.post("/api/register", async (req, res) => {
   res.json({ status: "ok" });
 });
 
-const port = 3500;
-
-app.listen(port, () => {
-  console.log(`App is listening on ${port}`);
+app.listen(process.env.PORT, () => {
+  console.log(`App is listening on http://localhost:${process.env.PORT}`);
 });
