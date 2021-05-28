@@ -23,8 +23,21 @@ app.post("/api/register", async (req, res) => {
   console.log(req.body);
   const { username, password: plainTextPassword } = req.body;
 
-  const password = await bcrypt.hash(password, 10); //Generating encrypted/hash passwword
+  const password = await bcrypt.hash(plainTextPassword, 10); //Generating encrypted/hash passwword
   //console.log(await bcrypt.hash(password, 10)); //Generating encrypted/hash passwword
+
+  //Adding username and password in database
+  try {
+    const response = await User.create({
+      username,
+      password,
+    });
+    console.log(`User created Succesfully: ${response}`);
+  } catch (error) {
+    console.log(error.message);
+    return res.json({ status: "Error" });
+  }
+
   res.json({ status: "ok" });
 });
 
