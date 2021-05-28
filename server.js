@@ -4,6 +4,7 @@ const bodyParser = require("body-parser"); // to parse the JSON POSTED data from
 const dotenv = require("dotenv");
 dotenv.config();
 
+const User = require("./model/user");
 const mongoose = require("mongoose");
 mongoose.connect(process.env.DB_URL, {
   useNewUrlParser: true,
