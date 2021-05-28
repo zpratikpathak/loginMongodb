@@ -4,7 +4,8 @@
   "description": "Login authetication",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "keywords": [
     "login",
@@ -12,6 +13,10 @@
     "node"
   ],
   "author": "Pratik Pathak",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zpratikpathak/loginMongodb.git"
+  },
   "license": "Apache-2.0",
   "dependencies": {
     "bcryptjs": "^2.4.3",
