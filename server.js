@@ -9,18 +9,26 @@ const mongoose = require("mongoose");
 mongoose.connect(process.env.DB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true,
 });
 //console.log(process.env.DB_URL);
+
+const bcrypt = require("bcryptjs"); //For Encrypting/Hasing the password
 
 const app = express();
 app.use("/", express.static(path.join(__dirname, "static")));
 
-app.use(bodyParser.json()); //middleware
+app.use(bodyParser.json()); //middleware to parse/read json post data
 app.post("/api/register", async (req, res) => {
   console.log(req.body);
+  const { username, password: plainTextPassword } = req.body;
+
+  const password = await bcrypt.hash(password, 10); //Generating encrypted/hash passwword
+  //console.log(await bcrypt.hash(password, 10)); //Generating encrypted/hash passwword
   res.json({ status: "ok" });
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`App is listening on http://localhost:${process.env.PORT}`);
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`App is listening on http://localhost:${port}`);
 });
