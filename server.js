@@ -1,6 +1,8 @@
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser"); // to parse the JSON POSTED data from web
+const jwt = require("jsonwebtoken");
+
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -19,6 +21,33 @@ const app = express();
 app.use("/", express.static(path.join(__dirname, "static")));
 
 app.use(bodyParser.json()); //middleware to parse/read json post data
+
+//for logging into system
+app.post("/api/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  //finding user
+  const user = await User.findOne({ username }).lean(); //.lean returns the value in simple javascript format
+
+  //User not found
+  if (!user) {
+    return res.json({ status: "error", error: "Invalid Username" });
+  }
+
+  //Comparing Password
+  if (bcrypt.compare(password, user.password)) {
+    //Login Succesfull
+
+    const token = jwt.sign(
+      { id: user._id, username: user.username },
+      process.env.JWT_SECRET
+    );
+    return res.json({ status: "ok", data: token });
+  }
+
+  res.json({ staus: "error", error: "Wrong Password" });
+});
+
 app.post("/api/register", async (req, res) => {
   console.log(req.body);
   const { username, password: plainTextPassword } = req.body;
@@ -32,7 +61,7 @@ app.post("/api/register", async (req, res) => {
   }
 
   //Handling Password Error
-  if (password.length < 6) {
+  if (plainTextPassword.length < 6) {
     res.json({
       status: "error",
       error: "Password is too Small. Password should be atleast 6 Characters",
