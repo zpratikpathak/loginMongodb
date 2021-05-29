@@ -1,6 +1,11 @@
 # loginMongodb Authentication
 This module is for implementing Register, Login and Change Password function.
 
+## Demo
+Visit this link to see the demo https://loginmongodb.azurewebsites.net/
+
+Note: It will take 30-40 sec to load if you are viewing first time. This happens because website is deployed on serverless architecture in order to cut the hosting prices.
+
 ## Requirements
 - Install nodeJS 14 [(Click here to download)](https://nodejs.org/dist/v14.17.0/node-v14.17.0-x64.msi "NodeJS Download")
 - Install MongoDB [here](https://docs.mongodb.com/manual/administration/install-community/). ([Optional] You can instead use MongoDB Atlas if you want.)
