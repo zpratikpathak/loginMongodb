@@ -22,6 +22,35 @@ app.use("/", express.static(path.join(__dirname, "static")));
 
 app.use(bodyParser.json()); //middleware to parse/read json post data
 
+//Password Chnaging system
+app.post("/api/change-password", async (req, res) => {
+  const { token, newpassword: plainTextPassword } = req.body;
+
+  //jwt.verify converts the middle value of JWT into human readable data
+  try {
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+
+    const password = await bcrypt.hash(plainTextPassword, 10); //Generating encrypted/hash passwword
+    //console.log(await bcrypt.hash(password, 10)); //Generating encrypted/hash passwword
+
+    //Handling Password Error
+    if (plainTextPassword.length < 6) {
+      res.json({
+        status: "error",
+        error: "Password is too Small. Password should be atleast 6 Characters",
+      });
+    }
+
+    //changing the passsword
+    const _id = user.id;
+    await User.updateOne({ _id }, { $set: { password } });
+  } catch (error) {
+    res.json({ status: "error", error: "Invalid Signature ;)" });
+  }
+  console.log(user);
+  res.json({ status: "ok" });
+});
+
 //for logging into system
 app.post("/api/login", async (req, res) => {
   const { username, password } = req.body;
