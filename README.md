@@ -19,7 +19,7 @@ PORT=
 ```
 JWT_SECRET=
 ```
-*DB_URL*: In DB_URL you can add mongodb Atlas connection string or you can add local mongodb URL. If you don't know how to generate MongoDB Atlas database URL then [follow](https://www.teachmebro.com/tutorial/building-a-todo-app-backend/todo-app-making-mongodb-database-connection/) this tutorial
+*DB_URL*: In DB_URL you can add mongodb Atlas connection string or you can add local mongodb URL. If you don't know how to generate MongoDB Atlas database URL then [follow](https://dev.to/dalalrohit/how-to-connect-to-mongodb-atlas-using-node-js-k9i) this tutorial
 
 *PORT*: Enter port number at which app will run
 
