@@ -1,1 +1,1 @@
-Creating a model folder in order for crezting schema
+Model folder contains DATABASE Schema
